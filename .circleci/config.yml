@@ -3,16 +3,13 @@ version: 2.1
 jobs:
   sonarcloud_scan:
     docker:
-      - image: circleci/node:latest
+      - image: sonarsource/sonar-scanner-cli:latest  # Use SonarQube CLI Docker image
     steps:
       - checkout
       - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Run SonarQube analysis with npx
+          name: Run SonarQube analysis
           command: |
-            npx sonar-scanner \
+            sonar-scanner \
               -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
               -Dsonar.organization=${st10217639} \
               -Dsonar.sources=. \
@@ -24,6 +21,3 @@ workflows:
   sonarcloud_scan_workflow:
     jobs:
       - sonarcloud_scan
-
-
-
