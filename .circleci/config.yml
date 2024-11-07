@@ -10,18 +10,24 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
+          name: Install and prepare SonarQube scanner
+          command: |
+            npm install -g sonar-scanner
+            chmod +x $(npm root -g)/sonar-scanner/bin/sonar-scanner  # Add execute permissions
+      - run:
           name: Run SonarQube analysis
           command: |
-            npx sonar-scanner \
+            sonar-scanner \
               -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
               -Dsonar.organization=${st10217639} \
               -Dsonar.sources=. \
               -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${SONAR_TOKEN}  # Updated variable name
+              -Dsonar.login=${SONAR_TOKEN}
 
 workflows:
   version: 2
   sonarcloud_scan_workflow:
     jobs:
       - sonarcloud_scan
+
 
