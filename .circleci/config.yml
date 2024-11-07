@@ -10,15 +10,14 @@ jobs:
           name: Run SonarQube analysis
           command: |
             sonar-scanner \
-              -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
-              -Dsonar.organization=${st10217639} \
+              -Dsonar.projectKey="ST10217639_APDS7311_PART3" \
+              -Dsonar.organization="st10217639" \
               -Dsonar.sources=. \
               -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${SONAR_TOKEN}
+              -Dsonar.login="${SONAR_TOKEN}"  # Ensure SONAR_TOKEN is set in CircleCI environment variables
 
 workflows:
   version: 2
   sonarcloud_scan_workflow:
     jobs:
       - sonarcloud_scan
-
