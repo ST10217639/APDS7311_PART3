@@ -17,10 +17,11 @@ jobs:
               -Dsonar.organization=${st10217639} \
               -Dsonar.sources=. \
               -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${10cac22f3162714daaa66b8146956b1e23542842}
+              -Dsonar.login=${SONAR_TOKEN}  # Updated variable name
 
 workflows:
   version: 2
   sonarcloud_scan_workflow:
     jobs:
       - sonarcloud_scan
+
