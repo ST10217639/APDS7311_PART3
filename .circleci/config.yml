@@ -10,14 +10,9 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Install and prepare SonarQube scanner
+          name: Run SonarQube analysis with npx
           command: |
-            npm install -g sonar-scanner
-            chmod +x $(npm root -g)/sonar-scanner/bin/sonar-scanner  # Add execute permissions
-      - run:
-          name: Run SonarQube analysis
-          command: |
-            sonar-scanner \
+            npx sonar-scanner \
               -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
               -Dsonar.organization=${st10217639} \
               -Dsonar.sources=. \
@@ -29,5 +24,6 @@ workflows:
   sonarcloud_scan_workflow:
     jobs:
       - sonarcloud_scan
+
 
 
