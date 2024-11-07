@@ -14,6 +14,11 @@ app.use(helmet());
 // Database Connection
 connectDB();
 
+// Secure HTTPS server setup
+const privateKey = fs.readFileSync('C:\\Users\\lab_services_student\\employee-payments-portal\\backend\\Keys\\privatekey.pem', 'utf8');
+const certificate = fs.readFileSync('C:\\Users\\lab_services_student\\employee-payments-portal\\backend\\Keys\\certificate.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+
 // Routes
 app.use('/api/auth', authRoutes);
 
