@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+  sonarcloud_scan:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run SonarQube analysis
+          command: |
+            npx sonar-scanner \
+              -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
+              -Dsonar.organization=${st10217639} \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${10cac22f3162714daaa66b8146956b1e23542842}
+
+workflows:
+  version: 2
+  sonarcloud_scan_workflow:
+    jobs:
+      - sonarcloud_scan
