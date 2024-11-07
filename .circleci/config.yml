@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  sonarcloud_scan:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run SonarQube analysis
+          command: |
+            npx sonar-scanner \
+              -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
+              -Dsonar.organization=${st10217639} \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${10cac22f3162714daaa66b8146956b1e23542842}
+
+workflows:
+  version: 2
+  sonarcloud_scan_workflow:
+    jobs:
+      - sonarcloud_scan
+
+# Orchestrate jobs using workflows
+# See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
+workflows:
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
+    jobs:
+      - node/test:
+          # This is the node version to use for the `cimg/node` tag
+          # Relevant tags can be found on the CircleCI Developer Hub
+          # https://circleci.com/developer/images/image/cimg/node
+          version: '16.10'
+          # If you are using yarn, change the line below from "npm" to "yarn"
+          pkg-manager: npm
