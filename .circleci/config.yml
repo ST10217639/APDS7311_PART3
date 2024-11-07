@@ -3,13 +3,21 @@ version: 2.1
 jobs:
   sonarcloud_scan:
     docker:
-      - image: sonarsource/sonar-scanner-cli:latest  # Use SonarQube CLI Docker image
+      - image: circleci/node:latest
     steps:
       - checkout
       - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Install SonarQube scanner locally with correct permissions
+          command: |
+            npm install sonar-scanner --no-bin-links
+            chmod +x ./node_modules/sonar-scanner/bin/sonar-scanner  # Fix permissions
+      - run:
           name: Run SonarQube analysis
           command: |
-            sonar-scanner \
+            ./node_modules/.bin/sonar-scanner \
               -Dsonar.projectKey=${ST10217639_APDS7311_PART3} \
               -Dsonar.organization=${st10217639} \
               -Dsonar.sources=. \
