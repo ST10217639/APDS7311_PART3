@@ -3,6 +3,9 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
 
 dotenv.config();
 const app = express();
@@ -23,4 +26,16 @@ const credentials = { key: privateKey, cert: certificate };
 app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// HTTPS server
+https.createServer(credentials, app).listen(PORT, () => {
+  console.log(`Secure server running on port ${PORT}`);
+});
+
+// HTTP server that redirects to HTTPS
+http.createServer((req, res) => {
+  res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+  res.end();
+}).listen(80, () => {
+  console.log('HTTP server running on port 80 and redirecting to HTTPS');
+});
