@@ -2,9 +2,8 @@ const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const dotenv = require('dotenv');
-const helmet = require('helmet');
-const csurf = require('csurf'); // CSRF protection
-const cookieParser = require('cookie-parser'); // Needed for CSRF cookies
+const helmet = require('helmet'); 
+
 const fs = require('fs');
 const https = require('https');
 const http = require('http');
@@ -15,22 +14,6 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(helmet());
-app.use(cookieParser()); // Parses cookies for CSRF protection
-app.use(csurf({ cookie: true })); // Enable CSRF protection with cookies
-
-// CSRF error handling middleware
-app.use((err, req, res, next) => {
-  if (err.code === 'EBADCSRFTOKEN') {
-    // CSRF token validation failed
-    return res.status(403).json({ message: 'Invalid CSRF token' });
-  }
-  next(err);
-});
-
-// Set up a route to provide CSRF token to clients
-app.get('/api/csrf-token', (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
 
 // Database Connection
 connectDB();
