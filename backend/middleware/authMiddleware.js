@@ -1,3 +1,4 @@
+// verify JWT and authorize access to routes.
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {

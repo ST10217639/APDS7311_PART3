@@ -1,3 +1,4 @@
+// Another way of adding more security Security
 const rateLimit = require('express-rate-limit');
 
 const loginLimiter = rateLimit({
