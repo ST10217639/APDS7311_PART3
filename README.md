@@ -2,16 +2,6 @@
 
 This project is a secure employee payments portal built using Node.js, Express, and React. It provides secure authentication, password encryption, and SSL-enforced traffic.
 
-## Table of Contents
-1. [Prerequisites](#prerequisites)
-2. [Project Structure](#project-structure)
-3. [Setup Instructions](#setup-instructions)
-   - [Cloning the Repository](#cloning-the-repository)
-   - [Backend Setup](#backend-setup)
-   - [Frontend Setup](#frontend-setup)
-4. [Running the Application](#running-the-application)
-5. [Environment Variables](#environment-variables)
-
 ## Prerequisites
 
 Ensure you have the following installed:
